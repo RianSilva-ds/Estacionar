@@ -67,3 +67,29 @@ class Estacionamento:
 
         tempoFormatado = f"{horas} hora(s) e {minutos} minuto(s)"
         return valor, tempoFormatado
+    
+def menu():
+    estacionamento = Estacionamento()
+
+    while True:
+        print("\n=== Sistema de Estacionamento ===")
+        print("1 - Cadastrar carro")
+        print("2 - Consultar carros")
+        print("3 - Remover carro / Calcular valor")
+        print("4 - Sair")
+
+        opcao = input("Digite o número da opção desejada: ")
+
+        if opcao == "1":
+            estacionamento.cadastrarCarro()
+        elif opcao == "2":
+            estacionamento.consultarCarros()
+        elif opcao == "3":
+            estacionamento.removerCarro()
+        elif opcao == "4":
+            print("Saindo do sistema. Até logo!")
+            break
+        else:
+            print("Opção inválida! Tente novamente.")
+
+menu()
