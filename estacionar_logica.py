@@ -29,3 +29,41 @@ class Estacionamento:
         carro = Carro(placa, cor, modelo)
         self.carrosEstacionados.append(carro)
         print("Carro cadastrado com sucesso!")
+
+    def removerCarro(self):
+        placa = input("Digite a placa: ").upper()
+        carro = self.buscarCarro(placa)
+        if carro:
+            carro.exibir()
+            valor, tempo = self.calcularValor(carro.horarioEntrada)
+            print(f"\nValor total a ser pago: R${valor:.2f}")
+            print(f"Tempo de permanência: {tempo}")
+            self.carrosEstacionados.remove(carro)
+            print("Carro removido com sucesso!")
+        else:
+            print("Carro não encontrado.")
+
+    def buscarCarro(self, placa):
+        for carro in self.carrosEstacionados:
+            if carro.placa == placa:
+                return carro
+        return None
+
+    def calcularValor(self, horarioEntrada):
+        horaSaida = datetime.datetime.now()
+        tempoPermanencia = horaSaida - horarioEntrada
+        totalSegundos = int(tempoPermanencia.total_seconds())
+
+        horas, minutos = divmod(totalSegundos, 3600)
+        minutos = minutos // 60
+
+        if totalSegundos <= 1800:
+            valor = 7.00
+        elif totalSegundos <= 10800:
+            valor = 13.00
+        else:
+            horasExtras = math.ceil((totalSegundos - 10800) / 3600)
+            valor = 13.00 + (horasExtras * 2.00)
+
+        tempoFormatado = f"{horas} hora(s) e {minutos} minuto(s)"
+        return valor, tempoFormatado
